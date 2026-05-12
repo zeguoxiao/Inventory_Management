@@ -11,7 +11,8 @@
 - Python 3.10+
 - 依赖见 `requirements.txt`
 
-## 本地运行
+## 本地运行    
+(*****直接打开inventory_system文件夹下的网站启动.bat也可以*****)
 
 ```powershell
 cd inventory_system
