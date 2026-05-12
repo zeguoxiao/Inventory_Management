@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}注册 · 简易商品库存管理系统{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>用户注册</h1>
+  <form method="post" class="form">
+    <label>用户名<input name="username" autocomplete="username" required minlength="3"></label>
+    <label>密码<input name="password" type="password" autocomplete="new-password" required minlength="6"></label>
+    <label>确认密码<input name="password2" type="password" autocomplete="new-password" required minlength="6"></label>
+    <div class="actions">
+      <button type="submit">注册</button>
+      <a class="secondary" href="{{ url_for('login') }}">返回登录</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

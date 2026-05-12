@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}简易商品库存管理系统{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">简易商品库存管理系统</div>
+    {% if session.user_id %}
+    <nav class="nav">
+      <a href="{{ url_for('inventory') }}">库存列表</a>
+      <a href="{{ url_for('product_add') }}">新增商品</a>
+      <span class="user">当前用户：{{ session.username }}</span>
+      <form class="inline" method="post" action="{{ url_for('logout') }}">
+        <button type="submit" class="linkish">退出</button>
+      </form>
+    </nav>
+    {% endif %}
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flash-list">
+          {% for category, message in messages %}
+            <li class="flash flash-{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <small>5G 软件工程实训 · 数据持久化：SQLite（重启不丢失）</small>
+  </footer>
+</body>
+</html>

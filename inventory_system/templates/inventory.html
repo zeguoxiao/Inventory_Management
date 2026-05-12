@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}库存列表{% endblock %}
+{% block content %}
+<section class="card">
+  <div class="toolbar">
+    <form method="get" action="{{ url_for('inventory') }}" class="search-form">
+      <input type="search" name="q" value="{{ q }}" placeholder="按编号 / 名称 / 类别 / 备注模糊查询">
+      <button type="submit">查询</button>
+      {% if q %}
+      <a class="secondary" href="{{ url_for('inventory') }}">清除条件</a>
+      {% endif %}
+    </form>
+    <a class="btn-primary" href="{{ url_for('product_add') }}">添加商品</a>
+  </div>
+
+  {% if not products %}
+  <p class="muted">暂无数据，请点击「添加商品」录入。</p>
+  {% else %}
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>编号(SKU)</th>
+          <th>名称</th>
+          <th>类别</th>
+          <th>库存</th>
+          <th>单价(元)</th>
+          <th>备注</th>
+          <th>更新时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in products %}
+        <tr>
+          <td>{{ p.sku }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.category }}</td>
+          <td>{{ p.quantity }}</td>
+          <td>{{ "%.2f"|format(p.unit_price) }}</td>
+          <td class="ellipsis" title="{{ p.note }}">{{ p.note }}</td>
+          <td>{{ p.updated_at }}</td>
+          <td class="row-actions">
+            <a href="{{ url_for('product_edit', pid=p.id) }}">修改</a>
+            <form method="post" action="{{ url_for('product_delete', pid=p.id) }}" onsubmit="return confirm('确定删除该商品？');">
+              <button type="submit" class="danger">删除</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

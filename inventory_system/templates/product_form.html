@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{% if mode == 'add' %}添加商品{% else %}修改商品{% endif %}{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>{% if mode == 'add' %}添加商品{% else %}修改商品{% endif %}</h1>
+  <form method="post" class="form">
+    <label>商品编号(SKU)
+      <input name="sku" required maxlength="64" value="{{ form.sku or '' }}" pattern="[A-Za-z0-9._\-]{1,64}">
+    </label>
+    <small class="hint">仅字母、数字及 ._-</small>
+    <label>商品名称<input name="name" required maxlength="128" value="{{ form.name or '' }}"></label>
+    <label>类别<input name="category" maxlength="64" value="{{ form.category or '' }}"></label>
+    <label>库存数量<input name="quantity" type="number" min="0" step="1" required value="{{ form.quantity if form.quantity is not none else '' }}"></label>
+    <label>单价(元)<input name="unit_price" type="number" min="0" step="0.01" required value="{{ form.unit_price if form.unit_price is not none else '' }}"></label>
+    <label>备注<textarea name="note" rows="3" maxlength="500">{{ form.note or '' }}</textarea></label>
+    <div class="actions">
+      <button type="submit">保存</button>
+      <a class="secondary" href="{{ url_for('inventory') }}">取消</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
