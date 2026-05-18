@@ -16,8 +16,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 镜像推送到 Gitee
-        uses: wearerequired/git-mirror-action@master
+      - name: 镜像推送到 Gitee（自动创建仓库）
+        uses: Yikun/hub-mirror-action@v1.5
         with:
-          source-repo: "https://github.com/${{ github.repository }}.git"
-          destination-repo: "https://${{ secrets.GITEE_USERNAME }}:${{ secrets.GITEE_TOKEN }}@gitee.com/${{ secrets.GITEE_USERNAME }}/${{ github.event.repository.name }}.git"
+          src: github/zeguoxiao
+          dst: gitee/xiao-zeuguo
+          dst_key: ${{ secrets.GITEE_TOKEN }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          account_type: user
+          clone_style: https
+          force_update: true
+          static_list: ${{ github.event.repository.name }}
